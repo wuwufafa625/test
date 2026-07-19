@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+</head>
+<body>
+
+<h2>Data Google Sheet</h2>
+
+<table border="1" id="tbl"></table>
+
+<script>
+const url="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlFPf8ouSJ4MsB_oyvQKEMYy3ZLOCsiugJFmRZVr5sJ99jIFWDWtg4-M67yZqZZ0drl3HbaiFXtOj7/pub?output=csv&gid=0";
+
+fetch(url)
+.then(r=>r.text())
+.then(csv=>{
+
+ const rows=csv.trim().split("\n").map(r=>r.split(","));
+
+ let html="";
+
+ rows.forEach((row,i)=>{
+    html+="<tr>";
+    row.forEach(col=>{
+       html+=i==0?`<th>${col}</th>`:`<td>${col}</td>`;
+    });
+    html+="</tr>";
+ });
+
+ document.getElementById("tbl").innerHTML=html;
+
+});
+</script>
+
+</body>
+</html>
